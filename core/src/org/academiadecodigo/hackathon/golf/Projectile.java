@@ -22,15 +22,46 @@ public class Projectile {
         this.bottleImage = new Texture(Gdx.files.internal("bottle.jpg"));
     }
 
-    public void render() {
+    public void move() {
         for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
             Rectangle bottle = iter.next();
             bottle.x -= 200 * Gdx.graphics.getDeltaTime();
 
+        }
+    }
+
+    public void collisionDetection(Toy toy, Weapon weapon){
+        for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
+            Rectangle bottle = iter.next();
+
             if (bottle.x < 0) {
                 iter.remove();
             }
+
+            if (bottle.overlaps(toy.getToy())) {
+                bottle.set(1024, MathUtils.random(0, 768 - 39), 30, 39);
+                toy.setLifes(toy.getLifes() - 1);
+            }
+
+            if (weapon.getWeapon().overlaps(bottle)) {
+
+                bottle.set(1024, MathUtils.random(0, 768 - 39), 30, 39);
+                weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
+                weapon.changeWeapon();
+                weapon.setMoving(false);
+
+            }
+            if (toy.getLifes() == 0) {
+                toy.getToyImage().dispose();
+            }
         }
+    }
+
+
+
+    public void render(Weapon weapon) {
+
+
     }
 
     public Texture getBottleImage() {
@@ -41,11 +72,11 @@ public class Projectile {
         return bottles;
     }
 
-    public void dispose(){
+    public void dispose() {
         bottleImage.dispose();
     }
 
-    public void checkTime(){
+    public void checkTime() {
         if (TimeUtils.nanoTime() - lastThrowTime > 1000000000) {
             spawnBottles();
         }

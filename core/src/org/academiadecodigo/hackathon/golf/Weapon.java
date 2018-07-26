@@ -65,4 +65,14 @@ public class Weapon {
     public Rectangle getWeapon() {
         return weapon;
     }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+    public void changeWeapon(){
+        int i = (int) Math.floor(Math.random() * 2) + 1;
+        weaponTexture = new Texture(Gdx.files.internal("weapon" + i + ".png"));
+
+    }
 }

@@ -12,67 +12,75 @@ import com.badlogic.gdx.utils.*;
 import java.lang.reflect.Array;
 
 public class ToyGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	private Toy toy;
-	private SensualWoman sensualWoman;
-	private OrthographicCamera camera;
-	private Weapon weapon;
+    SpriteBatch batch;
+    Texture img;
+    private Toy toy;
+    private SensualWoman sensualWoman;
+    private OrthographicCamera camera;
+    private Weapon weapon;
+    private int hitWoman = 0;
 
 
     private Projectile bottles;
 
-	@Override
-	public void create () {
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1024,768);
-		batch = new SpriteBatch();
-		toy = new Toy();
-		sensualWoman = new SensualWoman();
-		weapon = new Weapon(toy);
+    @Override
+    public void create() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1024, 768);
+        batch = new SpriteBatch();
+        toy = new Toy();
+        sensualWoman = new SensualWoman();
+        weapon = new Weapon(toy);
 
         bottles = new Projectile();
         bottles.spawnBottles();
 
-		//img = new Texture(name of grid); --> put image of background
-	}
+        //img = new Texture(name of grid); --> put image of background
+    }
 
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(weapon.getWeaponTexture(),weapon.getWeapon().getX(),weapon.getWeapon().getY());
-		batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-		batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
+    @Override
+    public void render() {
 
-        for(Rectangle bottle: bottles.getBottles()){
+
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        batch.draw(weapon.getWeaponTexture(), weapon.getWeapon().getX(), weapon.getWeapon().getY());
+        batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
+        batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
+
+        for (Rectangle bottle : bottles.getBottles()) {
             batch.draw(bottles.getBottleImage(), bottle.x, bottle.y);
         }
-		batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())) ,(sensualWoman.getSensualWoman().getY()) );
-		batch.end();
-		camera.update();
-
-		toy.move();
-		weapon.move(toy);
+        batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())), (sensualWoman.getSensualWoman().getY()));
+        batch.end();
+        camera.update();
 
         batch.setProjectionMatrix(camera.combined);
 
         bottles.checkTime();
 
+        toy.move();
+        weapon.move(toy);
+        sensualWoman.move();
+        bottles.move();
 
-        bottles.render();
 
-		sensualWoman.move();
-		if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
-			sensualWoman.getWomanImage().dispose();
+        bottles.collisionDetection(toy, weapon);
 
-		}
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
+        if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
+            hitWoman++;
+        }
+        if (hitWoman >= 3) {
+            sensualWoman.dispose();
+        }
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
         bottles.dispose();
-	}
+    }
+
+
 }

@@ -40,6 +40,11 @@ public class SensualWoman {
     public Rectangle getSensualWoman() {
         return sensualWoman;
     }
+
+    public void dispose(){
+        womenImage.dispose();
+        sensualWoman.set(-130,0,0,0);
+    }
 }
 
 

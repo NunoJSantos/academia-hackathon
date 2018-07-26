@@ -12,10 +12,12 @@ public class Toy {
 
     private Rectangle toy;
     private Texture toyImage;
+    private int lifes;
 
 
     public Toy(){
         this.toy = new Rectangle();
+        this.lifes = 3;
         toy.x = 20;
         toy.y = 768/2 - 64/2;
         toy.width = 64;
@@ -37,5 +39,13 @@ public class Toy {
 
     public Rectangle getToy() {
         return toy;
+    }
+
+    public int getLifes() {
+        return lifes;
+    }
+
+    public void setLifes(int lifes) {
+        this.lifes = lifes;
     }
 }
