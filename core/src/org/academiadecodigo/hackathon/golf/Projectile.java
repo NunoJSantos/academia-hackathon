@@ -53,8 +53,8 @@ public class Projectile {
 
     public void spawnBottles() {
         Rectangle bottle = new Rectangle();
-        bottle.x = 800;
-        bottle.y = MathUtils.random(0, 480 - 39);
+        bottle.x = 1024;
+        bottle.y = MathUtils.random(0, 768 - 39);
         bottle.width = 30;
         bottle.height = 39;
         bottles.add(bottle);
