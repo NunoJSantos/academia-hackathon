@@ -20,6 +20,7 @@ public class ToyGame implements Screen {
     private int hitWoman = 0;
     private Laser laser;
     private Music themeGame;
+    private Sound womanScream;
 
     private TheGame game;
 
@@ -28,6 +29,7 @@ public class ToyGame implements Screen {
     public ToyGame(TheGame game) {
         this.game = game;
         themeGame = Gdx.audio.newMusic(Gdx.files.internal("themeGame.wav"));
+        womanScream = Gdx.audio.newSound(Gdx.files.internal("womanScream.wav"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         batch = new SpriteBatch();
@@ -104,6 +106,7 @@ public class ToyGame implements Screen {
         laser.collisionDetection(toy);
 
         if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
+            womanScream.play();
             hitWoman++;
             weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
             weapon.setMoving(false);
