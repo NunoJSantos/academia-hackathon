@@ -2,6 +2,8 @@ package org.academiadecodigo.hackathon.golf;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +19,7 @@ public class ToyGame implements Screen {
     private Weapon weapon;
     private int hitWoman = 0;
     private Laser laser;
+    private Music themeGame;
 
     private TheGame game;
 
@@ -24,7 +27,7 @@ public class ToyGame implements Screen {
 
     public ToyGame(TheGame game) {
         this.game = game;
-
+        themeGame = Gdx.audio.newMusic(Gdx.files.internal("themeGame.wav"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         batch = new SpriteBatch();
@@ -33,7 +36,8 @@ public class ToyGame implements Screen {
         weapon = new Weapon(toy);
         laser = new Laser(sensualWoman);
         laser.spawnLasers();
-
+        themeGame.setLooping(true);
+        themeGame.play();
         bottles = new Projectile();
         bottles.spawnBottles();
 
@@ -78,7 +82,7 @@ public class ToyGame implements Screen {
             game.batch.draw(bottles.getBottleImage(), bottle.x, bottle.y);
         }
         for (Rectangle lasers : laser.getLasers()) {
-            game.batch.draw(laser.getLaserImage(), lasers.x,lasers.y);
+            game.batch.draw(laser.getLaserImage(), lasers.x, lasers.y);
         }
         game.batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())), (sensualWoman.getSensualWoman().getY()));
         game.batch.end();

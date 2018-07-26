@@ -22,7 +22,7 @@ public class Laser {
     private Rectangle laserRec;
 
     public Laser(SensualWoman woman) {
-        this.lasers = new Array<>();
+        this.lasers = new Array<Rectangle>();
         this.laserImage = new Texture(Gdx.files.internal("laser.png"));
         this.woman = woman;
 
