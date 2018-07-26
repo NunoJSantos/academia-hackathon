@@ -11,6 +11,7 @@ public class ToyGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	private Toy toy;
+	private SensualWoman sensualWoman;
 	private OrthographicCamera camera;
 	
 	@Override
@@ -19,6 +20,7 @@ public class ToyGame extends ApplicationAdapter {
 		camera.setToOrtho(false, 1024,768);
 		batch = new SpriteBatch();
 		toy = new Toy();
+		sensualWoman = new SensualWoman();
 
 
 		//img = new Texture(name of grid); --> put image of background
@@ -30,9 +32,13 @@ public class ToyGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
+		batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
 		batch.end();
 		camera.update();
+
 		toy.move();
+
+		sensualWoman.move();
 	}
 	
 	@Override
