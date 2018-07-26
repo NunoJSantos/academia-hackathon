@@ -39,7 +39,9 @@ public class ToyGame implements Screen {
 		bottles = new Projectile();
 		bottles.spawnBottles();
 
+
 		//img = new Texture(name of grid); --> put image of background
+
 	}
 
 	@Override
@@ -100,6 +102,11 @@ public class ToyGame implements Screen {
         if (hitWoman >= 3) {
             sensualWoman.dispose();
         }
+
+		if(toy.getLifes() <= 0) {
+			game.setScreen(new GameOverScreen(game));
+		}
+
 	}
 	
 	@Override

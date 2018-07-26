@@ -31,7 +31,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
-        this.backgroundImage = new Texture(Gdx.files.internal("menupics/toymenu.jpg"));
+        this.backgroundImage = new Texture(Gdx.files.internal("menupics/toymenu.JPG"));
         this.startImage = new Texture(Gdx.files.internal("menupics/start.png"));
 
         this.background = new Rectangle();
@@ -105,6 +105,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        backgroundImage.dispose();
+        startImage.dispose();
     }
 }
