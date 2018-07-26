@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.*;
+
+import java.lang.reflect.Array;
 
 public class ToyGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -13,7 +17,9 @@ public class ToyGame extends ApplicationAdapter {
 	private Toy toy;
 	private SensualWoman sensualWoman;
 	private OrthographicCamera camera;
-	
+	private Weapon weapon;
+
+
 	@Override
 	public void create () {
 		camera = new OrthographicCamera();
@@ -21,6 +27,7 @@ public class ToyGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		toy = new Toy();
 		sensualWoman = new SensualWoman();
+		weapon = new Weapon(toy);
 
 
 		//img = new Texture(name of grid); --> put image of background
@@ -28,15 +35,17 @@ public class ToyGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		batch.draw(weapon.getWeaponTexture(),weapon.getWeapon().getX(),weapon.getWeapon().getY());
 		batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
 		batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
 		batch.end();
 		camera.update();
 
 		toy.move();
+		weapon.move(toy);
 
 		sensualWoman.move();
 	}
