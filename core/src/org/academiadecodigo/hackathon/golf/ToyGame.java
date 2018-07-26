@@ -21,27 +21,28 @@ public class ToyGame implements Screen {
     private OrthographicCamera camera;
     private Weapon weapon;
     private int hitWoman = 0;
+    private Laser laser;
 
-	private TheGame game;
+    private TheGame game;
 
     private Projectile bottles;
 
-	public ToyGame(TheGame game) {
-		this.game = game;
+    public ToyGame(TheGame game) {
+        this.game = game;
 
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1024,768);
-		batch = new SpriteBatch();
-		toy = new Toy();
-		sensualWoman = new SensualWoman();
-		weapon = new Weapon(toy);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1024, 768);
+        batch = new SpriteBatch();
+        toy = new Toy();
+        sensualWoman = new SensualWoman();
+        weapon = new Weapon(toy);
+        laser = new Laser(sensualWoman);
+        laser.spawnLasers();
 
-		bottles = new Projectile();
-		bottles.spawnBottles();
-
+        bottles = new Projectile();
+        bottles.spawnBottles();
 
 		//img = new Texture(name of grid); --> put image of background
-
 	}
 
 	@Override
@@ -69,25 +70,31 @@ public class ToyGame implements Screen {
 
 	}
 
-	@Override
-	public void render (float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.begin();
-		game.batch.draw(weapon.getWeaponTexture(),weapon.getWeapon().getX(),weapon.getWeapon().getY());
-		game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-		game.batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.batch.begin();
+        game.batch.draw(weapon.getWeaponTexture(), weapon.getWeapon().getX(), weapon.getWeapon().getY());
+        game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
+        game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
 
-        for(Rectangle bottle: bottles.getBottles()){
+        for (Rectangle bottle : bottles.getBottles()) {
             game.batch.draw(bottles.getBottleImage(), bottle.x, bottle.y);
         }
-		game.batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())) ,(sensualWoman.getSensualWoman().getY()) );
-		game.batch.end();
-		camera.update();
+        for (Rectangle lasers : laser.getLasers()) {
+            game.batch.draw(laser.getLaserImage(), lasers.x,lasers.y);
+        }
+        game.batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())), (sensualWoman.getSensualWoman().getY()));
+        game.batch.end();
+        camera.update();
 
         game.batch.setProjectionMatrix(camera.combined);
         bottles.checkTime();
 
+        laser.checkTime();
+
+        laser.move();
 
         toy.move();
         weapon.move(toy);
@@ -95,9 +102,12 @@ public class ToyGame implements Screen {
         bottles.move();
 
         bottles.collisionDetection(toy, weapon);
+        laser.collisionDetection(toy);
 
         if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
             hitWoman++;
+            weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
+            weapon.setMoving(false);
         }
         if (hitWoman >= 3) {
             sensualWoman.dispose();
@@ -112,5 +122,5 @@ public class ToyGame implements Screen {
 	@Override
 	public void dispose () {
         bottles.dispose();
-	}
+    }
 }

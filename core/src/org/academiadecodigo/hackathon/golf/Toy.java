@@ -20,9 +20,9 @@ public class Toy {
         this.lifes = 3;
         toy.x = 20;
         toy.y = 768/2 - 64/2;
-        toy.width = 64;
-        toy.height = 64;
-        toyImage = new Texture(Gdx.files.internal("toy.jpg"));
+        toy.width = 50;
+        toy.height = 120;
+        toyImage = new Texture(Gdx.files.internal("toy.png"));
     }
 
     public void move(){
