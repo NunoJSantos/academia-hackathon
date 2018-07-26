@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.*;
 
-import java.lang.reflect.Array;
 
 public class ToyGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -40,7 +37,7 @@ public class ToyGame extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(weapon.getWeaponTexture(),weapon.getWeapon().getX(),weapon.getWeapon().getY());
 		batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-		batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
+		batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())) ,(sensualWoman.getSensualWoman().getY()) );
 		batch.end();
 		camera.update();
 
@@ -48,6 +45,10 @@ public class ToyGame extends ApplicationAdapter {
 		weapon.move(toy);
 
 		sensualWoman.move();
+		if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
+			sensualWoman.getWomanImage().dispose();
+
+		}
 	}
 	
 	@Override
