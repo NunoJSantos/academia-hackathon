@@ -19,9 +19,9 @@ public class SensualWoman {
         this.sensualWoman = new Rectangle();
         sensualWoman.x = 850;
         sensualWoman.y = 768 / 2 - 64 / 2;
-        sensualWoman.width = 128;
-        sensualWoman.height = 128;
-        womenImage = new Texture(Gdx.files.internal("sharonStone.jpg"));
+        sensualWoman.width = 160;
+        sensualWoman.height = 160;
+        womenImage = new Texture(Gdx.files.internal("jessica1_600x600.png"));
     }
 
     public void move() {
