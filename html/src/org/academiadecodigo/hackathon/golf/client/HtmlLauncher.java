@@ -3,6 +3,7 @@ package org.academiadecodigo.hackathon.golf.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import org.academiadecodigo.hackathon.golf.TheGame;
 import org.academiadecodigo.hackathon.golf.ToyGame;
 
 public class HtmlLauncher extends GwtApplication {
@@ -46,6 +47,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new ToyGame();
+                return new TheGame();
         }
 }
