@@ -13,6 +13,9 @@ public class TheGame extends Game{
     public SpriteBatch batch;
     public BitmapFont font;
 
+    public BitmapFont getFont() {
+        return font;
+    }
 
     @Override
     public void create() {

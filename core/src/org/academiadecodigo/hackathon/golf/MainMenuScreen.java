@@ -1,9 +1,15 @@
 package org.academiadecodigo.hackathon.golf;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.*;
+
+import static com.badlogic.gdx.Gdx.input;
+
 
 /**
  * Created by codecadet on 26/07/2018.
@@ -14,10 +20,19 @@ public class MainMenuScreen implements Screen {
 
     private OrthographicCamera camera;
 
+    private Texture backgroundImage;
+    private Rectangle background;
+
     public MainMenuScreen(TheGame game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1024, 768);
+        this.backgroundImage = new Texture(Gdx.files.internal("toymenu.jpg"));
+        background = new Rectangle();
+        background.width = 1024;
+        background.height = 768;
+        background.x = 0;
+        background.y = 0;
     }
 
 
@@ -37,14 +52,21 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Welcometo Drop!", 100, 150);
+        game.batch.draw(backgroundImage,background.x,background.y);
+        game.getFont().getData().setScale(2,2);
+        game.font.draw(game.batch, "O Jogo do TOY!!!!", 100, 150);
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
         game.batch.end();
 
-        if(Gdx.input.isTouched()){
+        if(input.isKeyPressed(Input.Keys.ENTER)){
+            game.setScreen(new ToyGame(game));
+        }
+
+
+        /*if(Gdx.input.isTouched()){
             game.setScreen(new ToyGame(game));
             dispose();
-        }
+        }*/
     }
 
     @Override
