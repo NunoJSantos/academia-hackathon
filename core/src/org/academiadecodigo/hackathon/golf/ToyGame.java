@@ -227,7 +227,8 @@ public class ToyGame implements Screen {
                 womanScream.play();
                 sensualWoman.hitWoman();
                 toy.incrementScore(100);
-                weapon.getWeapon().set(1025, toy.getToy().getY(), 30, 30);
+                //System.out.println("shot her");
+                weapon.getWeapon().set(0, -200, 30, 30);
                 weapon.getWeaponTexture().dispose();
             }
         }

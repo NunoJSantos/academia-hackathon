@@ -68,6 +68,7 @@ public class Projectile {
             if (weapon.getWeapon().overlaps(bottle)) {
                 bottleCrash.play();
                 toy.incrementScore(10);
+                //System.out.println("shot");
                 bottle.set(1024, MathUtils.random(0, 768 - 38 - 80), 30, 39);
                 weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
                 weapon.changeWeapon();
