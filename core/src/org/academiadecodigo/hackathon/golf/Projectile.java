@@ -19,13 +19,13 @@ public class Projectile {
 
     public Projectile() {
         this.bottles = new Array<>();
-        this.bottleImage = new Texture(Gdx.files.internal("bottle.jpg"));
+        this.bottleImage = new Texture(Gdx.files.internal("moscatel.png"));
     }
 
     public void move() {
         for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
             Rectangle bottle = iter.next();
-            bottle.x -= 200 * Gdx.graphics.getDeltaTime();
+            bottle.x -= 300 * Gdx.graphics.getDeltaTime();
 
         }
     }
@@ -39,16 +39,17 @@ public class Projectile {
             }
 
             if (bottle.overlaps(toy.getToy())) {
-                bottle.set(1024, MathUtils.random(0, 768 - 39), 30, 39);
+                bottle.set(1024, MathUtils.random(0, 768 - 38), 25, 39);
                 toy.setLifes(toy.getLifes() - 1);
             }
 
             if (weapon.getWeapon().overlaps(bottle)) {
 
-                bottle.set(1024, MathUtils.random(0, 768 - 39), 30, 39);
-                weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
-                weapon.changeWeapon();
-                weapon.setMoving(false);
+                bottle.set(1024, MathUtils.random(0, 768 - 38), 25, 39);
+                weapon.getWeapon().set(1025, 400, 25,
+                        30);
+
+                weapon.getWeaponTexture().dispose();
 
             }
             if (toy.getLifes() == 0) {
@@ -85,9 +86,9 @@ public class Projectile {
     public void spawnBottles() {
         Rectangle bottle = new Rectangle();
         bottle.x = 1024;
-        bottle.y = MathUtils.random(0, 768 - 39);
-        bottle.width = 30;
-        bottle.height = 39;
+        bottle.y = MathUtils.random(0, 768 - 38);
+        bottle.width = 25;
+        bottle.height = 38;
         bottles.add(bottle);
         lastThrowTime = TimeUtils.nanoTime();
 

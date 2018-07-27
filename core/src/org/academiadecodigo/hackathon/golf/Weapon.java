@@ -17,44 +17,29 @@ public class Weapon {
 
     private boolean moving = false;
 
-    public Weapon(Toy toy){
+    public Weapon(Toy toy) {
 
 
-    int i = (int) Math.floor(Math.random() * 2) + 1;
+        int i = (int) Math.floor(Math.random() * 2) + 1;
         weaponTexture = new Texture(Gdx.files.internal("weapon" + i + ".png"));
 
         this.weapon = new Rectangle();
-        weapon.x = toy.getToy().getX();
+        weapon.x = toy.getToy().getX() + 15;
 
-        weapon.y = toy.getToy().getY();
+        weapon.y = toy.getToy().getY() + 75;
         weapon.width = 30;
         weapon.height = 30;
 
     }
 
-    public void move(Toy toy){
+    public void move(Toy toy) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            moving = true;
+        weapon.x += 500 * Gdx.graphics.getDeltaTime();
 
-            System.out.println("weapon created");
-        }
-
-        if(weapon.x > 1024){
-            int i = (int) Math.floor(Math.random() * 2) + 1;
-            weaponTexture.dispose();
-            weaponTexture = new Texture(Gdx.files.internal("weapon" + i + ".png"));
-            moving = false;
-        }
-
-        if(moving) {
-            weapon.x += 800 * Gdx.graphics.getDeltaTime();
-            return;
+        if (weapon.x > 1024) {
+           weaponTexture.dispose();
 
         }
-
-        weapon.x = toy.getToy().getX();
-        weapon.y = toy.getToy().getY();
 
     }
 
@@ -70,7 +55,7 @@ public class Weapon {
         this.moving = moving;
     }
 
-    public void changeWeapon(){
+    public void changeWeapon() {
         int i = (int) Math.floor(Math.random() * 2) + 1;
         weaponTexture = new Texture(Gdx.files.internal("weapon" + i + ".png"));
 
