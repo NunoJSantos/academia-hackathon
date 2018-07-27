@@ -2,7 +2,6 @@ package org.academiadecodigo.hackathon.golf;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -22,7 +21,7 @@ public class Laser {
     private Rectangle laserRec;
 
     public Laser(SensualWoman woman) {
-        this.lasers = new Array<>();
+        this.lasers = new Array<Rectangle>();
         this.laserImage = new Texture(Gdx.files.internal("laser.png"));
         this.woman = woman;
 

@@ -55,7 +55,7 @@ public class ToyGame implements Screen {
         laser = new Laser(sensualWoman);
         laser.spawnLasers();
 
-        weapons = new com.badlogic.gdx.utils.Array<>();
+        weapons = new com.badlogic.gdx.utils.Array<Weapon>();
         bottles = new Projectile();
         bottles.spawnBottles();
 

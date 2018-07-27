@@ -18,7 +18,7 @@ public class Projectile {
     private long lastThrowTime;
 
     public Projectile() {
-        this.bottles = new Array<>();
+        this.bottles = new Array<Rectangle>();
         this.bottleImage = new Texture(Gdx.files.internal("moscatel.png"));
     }
 
