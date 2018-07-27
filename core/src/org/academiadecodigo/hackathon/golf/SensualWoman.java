@@ -18,7 +18,7 @@ public class SensualWoman {
 
     public SensualWoman() {
         this.sensualWoman = new Rectangle();
-        sensualWoman.x = 850;
+        sensualWoman.x = 920;
         sensualWoman.y = 768 / 2 - 64 / 2;
         sensualWoman.width = 160;
         sensualWoman.height = 160;

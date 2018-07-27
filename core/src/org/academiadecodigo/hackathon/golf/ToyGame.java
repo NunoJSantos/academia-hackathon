@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.net.MalformedURLException;
 
@@ -42,6 +43,9 @@ public class ToyGame implements Screen {
     private Texture[] enemyLifesImages;
     private Rectangle[] enemyLifes;
     private Texture background;
+
+    private int counter = 0;
+    private long time = TimeUtils.millis();
 
 
     int initialPosition = 990;
@@ -128,6 +132,7 @@ public class ToyGame implements Screen {
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -136,7 +141,9 @@ public class ToyGame implements Screen {
         game.batch.draw(background, 0, 0);
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-        game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
+        if(TimeUtils.timeSinceMillis(time) > 9999) {
+            game.batch.draw(sensualWoman.getWomanImage(), sensualWoman.getSensualWoman().getX(), sensualWoman.getSensualWoman().getY());
+        }
 
         game.font.draw(game.batch, "Score: " + toy.getScore(), 485, 740);
 
@@ -156,7 +163,7 @@ public class ToyGame implements Screen {
         }
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-        game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
+
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -188,7 +195,6 @@ public class ToyGame implements Screen {
         for (Rectangle lasers : laser.getLasers()) {
             game.batch.draw(laser.getLaserImage(), lasers.x, lasers.y);
         }
-        game.batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())), (sensualWoman.getSensualWoman().getY()));
         game.batch.end();
         camera.update();
 

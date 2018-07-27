@@ -31,11 +31,11 @@ public class GameOverScreen implements Screen {
         this.game = game;
         this.score = score;
 
-        persistHighScore();
+        //persistHighScore();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         backgroundImage = new Texture(Gdx.files.internal("gameover.png"));
-        URL url = new URL("file://localhost/Users/codecadet/bootcamp/academia-hackathon/core/assets/toyvomit.gif");
+        URL url = new URL("file://localhost/Users/codecadet/workspace/academia-hackathon/core/assets/toyvomit.gif");
         Icon icon = new ImageIcon(url);
         JLabel label = new JLabel(icon);
         JFrame f = new JFrame("Ó TOY!!! NÃO CAIAS!!!");
@@ -69,9 +69,9 @@ public class GameOverScreen implements Screen {
 
     private synchronized void persistHighScore() {
 
-        Persistence persistence = game.getPersistence();
+        Persistence persistence = new Persistence();
         persistence.createConnection();
-        //persistence.insertScore(game.getUserName(), score);
+        persistence.insertScore(game.getUserName(), score);
         persistence.close();
 
     }
