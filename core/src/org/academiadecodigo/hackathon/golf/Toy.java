@@ -3,7 +3,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by codecadet on 26/07/2018.
@@ -29,7 +28,7 @@ public class Toy {
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) toy.y -= 200 * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) toy.y += 200 * Gdx.graphics.getDeltaTime();
         if(toy.y < 0) toy.y = 0;
-        if(toy.y > 768 - 64) toy.y = 768 - 64;
+        if(toy.y > 768 - 64 - 80) toy.y = 768 - 64 - 80;
     }
 
 
