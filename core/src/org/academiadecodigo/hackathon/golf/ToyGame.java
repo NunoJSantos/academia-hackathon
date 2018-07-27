@@ -128,10 +128,13 @@ public class ToyGame implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
 
+
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
         game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
 
         game.batch.draw(topBarImage, topbar.x, topbar.y);
+
+        game.font.draw(game.batch, "Score: " + toy.getScore(), 485, 740);
 
         if(toy.getLifes() >= 1) {
             game.batch.draw(life1image, life1.x, life1.y);
@@ -209,6 +212,7 @@ public class ToyGame implements Screen {
         for (Weapon weapon : weapons) {
             if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
                 sensualWoman.hitWomen();
+                toy.setScore(toy.getScore() + 100);
                 weapon.getWeapon().set(1025, toy.getToy().getY(), 30, 30);
                 weapon.getWeaponTexture().dispose();
             }

@@ -46,8 +46,8 @@ public class Projectile {
             if (weapon.getWeapon().overlaps(bottle)) {
 
                 bottle.set(1024, MathUtils.random(0, 768 - 38), 25, 39);
-                weapon.getWeapon().set(1025, 400, 25,
-                        30);
+                weapon.getWeapon().set(1025, 400, 25, 30);
+                toy.setScore(toy.getScore() + 10);
 
                 weapon.getWeaponTexture().dispose();
 
