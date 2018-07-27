@@ -24,7 +24,7 @@ public class ToyGame implements Screen {
     private Laser laser;
     private boolean createWeapon;
     private int countWeapon = 0;
-    private Music themeGame;
+    private Sound themeGame;
     private Sound womanScream;
     private Sound toySpeech;
 
@@ -58,7 +58,7 @@ public class ToyGame implements Screen {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
 
-        themeGame = Gdx.audio.newMusic(Gdx.files.internal("themeGame.wav"));
+        themeGame = Gdx.audio.newSound(Gdx.files.internal("themeGame.wav"));
         womanScream = Gdx.audio.newSound(Gdx.files.internal("womanScream.wav"));
         toySpeech = Gdx.audio.newSound(Gdx.files.internal("toySpeech.wav"));
         camera = new OrthographicCamera();
@@ -70,7 +70,7 @@ public class ToyGame implements Screen {
         laser.spawnLasers();
 
         weapons = new com.badlogic.gdx.utils.Array<Weapon>();
-        themeGame.setLooping(true);
+        //themeGame.setLooping(true);
         themeGame.play();
         bottles = new Projectile();
         bottles.spawnBottles();
@@ -242,7 +242,7 @@ public class ToyGame implements Screen {
 
 
             try {
-                themeGame.stop();
+                //themeGame.stop();
                 game.setScreen(new GameOverScreen(game, toy.getScore()));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
