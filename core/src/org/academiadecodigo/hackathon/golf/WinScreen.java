@@ -11,72 +11,44 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
-import javax.swing.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import static com.badlogic.gdx.Gdx.input;
 
-public class GameOverScreen implements Screen {
+/**
+ * Created by codecadet on 27/07/2018.
+ */
+public class WinScreen implements Screen {
 
     final TheGame game;
-
     private OrthographicCamera camera;
 
     private Texture backgroundImage;
     private Rectangle background;
     TextField nameField;
-    int score;
+    private int score;
 
-
-    public GameOverScreen(TheGame game, int score) throws MalformedURLException {
+    public WinScreen(TheGame game, int score) {
         this.game = game;
         this.score = score;
 
-        //persistHighScore();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         backgroundImage = new Texture(Gdx.files.internal("gameover.png"));
-        URL url = new URL("file://localhost/Users/codecadet/workspace/academia-hackathon/core/assets/toyvomit.gif");
-        Icon icon = new ImageIcon(url);
-        JLabel label = new JLabel(icon);
-        JFrame f = new JFrame("Ó TOY!!! NÃO CAIAS!!!");
-        f.getContentPane().add(label);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.pack();
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
-
         background = new Rectangle();
         background.x = 0;
         background.y = 0;
 
-
-        //UserTextInputListener listener = new UserTextInputListener();
-        //Gdx.input.getTextInput(listener, "Enter your name!", "Initial", "AAA");
-
-        //TODO maybe use this to log the scores
         TextField.TextFieldStyle style = new TextField.TextFieldStyle();
         style.font = new BitmapFont();
         style.fontColor = Color.CHARTREUSE;
-        String endText = "You Loose!! Your Score: " + score;
+        String endText = "You Win!! Your Score: " + score;
         nameField = new TextField(endText, style);
         nameField.setText(endText);
         nameField.setWidth(500);
-        nameField.setX(1024 / 2);
+        nameField.setX(480);
         nameField.setY(700);
 
-    }
-
-    private synchronized void persistHighScore() {
-
-        Persistence persistence = new Persistence();
-        persistence.createConnection();
-        persistence.insertScore(game.getUserName(), score);
-        persistence.close();
 
     }
-
 
     @Override
     public void show() {
@@ -85,6 +57,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(1, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -95,8 +68,6 @@ public class GameOverScreen implements Screen {
 
         game.batch.draw(backgroundImage, background.x, background.y);
         nameField.draw(game.batch, 10f);
-
-
 
         game.batch.end();
 
@@ -130,4 +101,5 @@ public class GameOverScreen implements Screen {
     public void dispose() {
         backgroundImage.dispose();
     }
+
 }

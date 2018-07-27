@@ -141,7 +141,7 @@ public class ToyGame implements Screen {
         game.batch.draw(background, 0, 0);
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-        if(TimeUtils.timeSinceMillis(time) > 9999) {
+        if (TimeUtils.timeSinceMillis(time) > 9999) {
             game.batch.draw(sensualWoman.getWomanImage(), sensualWoman.getSensualWoman().getX(), sensualWoman.getSensualWoman().getY());
         }
 
@@ -163,7 +163,6 @@ public class ToyGame implements Screen {
         }
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -234,11 +233,8 @@ public class ToyGame implements Screen {
         if (sensualWoman.getLife() <= 0) {
             sensualWoman.dispose();
 
-            try {
-                game.setScreen(new GameOverScreen(game, toy.getScore()));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            game.setScreen(new WinScreen(game, toy.getScore()));
+
         }
 
         if (toy.getLifes() <= 0) {
