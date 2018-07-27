@@ -13,12 +13,11 @@ public class Toy {
     private Texture toyImage;
     private int lifes;
 
-
     public Toy(){
         this.toy = new Rectangle();
         this.lifes = 3;
         toy.x = 20;
-        toy.y = 768/2 - 64/2;
+        toy.y = 768/2 - 120/2;
         toy.width = 50;
         toy.height = 120;
         toyImage = new Texture(Gdx.files.internal("toy.png"));
@@ -27,7 +26,7 @@ public class Toy {
     public void move(){
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) toy.y -= 200 * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) toy.y += 200 * Gdx.graphics.getDeltaTime();
-        if(toy.y < 0) toy.y = 0;
+        if(toy.y < 16) toy.y = 15;
         if(toy.y > 768 - 120 - 80) toy.y = 768 - 120 - 80;
     }
 
@@ -47,4 +46,5 @@ public class Toy {
     public void setLifes(int lifes) {
         this.lifes = lifes;
     }
+
 }

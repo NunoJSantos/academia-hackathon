@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.net.MalformedURLException;
+
 public class ToyGame implements Screen {
 
     SpriteBatch batch;
@@ -27,24 +29,22 @@ public class ToyGame implements Screen {
 
     private TheGame game;
 
-	private Texture life1image;
-	private Rectangle life1;
+    private Texture life1image;
+    private Rectangle life1;
 
-	private Texture life2image;
-	private Rectangle life2;
+    private Texture life2image;
+    private Rectangle life2;
 
-	private Texture life3image;
-	private Rectangle life3;
-
-
-
-	private Texture[] enemyLifesImages;
-	private Rectangle[] enemyLifes;
-	private  Texture background;
+    private Texture life3image;
+    private Rectangle life3;
 
 
+    private Texture[] enemyLifesImages;
+    private Rectangle[] enemyLifes;
+    private Texture background;
 
-	int initialPosition = 990;
+
+    int initialPosition = 990;
 
     private Projectile bottles;
 
@@ -71,36 +71,35 @@ public class ToyGame implements Screen {
         bottles = new Projectile();
         bottles.spawnBottles();
 
-		this.life1image = new Texture(Gdx.files.internal("gamepics/life.png"));
-		this.life1 = new Rectangle();
-		this.life2image = new Texture(Gdx.files.internal("gamepics/life.png"));
-		this.life2 = new Rectangle();
-		this.life3image = new Texture(Gdx.files.internal("gamepics/life.png"));
-		this.life3 = new Rectangle();
+        this.life1image = new Texture(Gdx.files.internal("gamepics/life.png"));
+        this.life1 = new Rectangle();
+        this.life2image = new Texture(Gdx.files.internal("gamepics/life.png"));
+        this.life2 = new Rectangle();
+        this.life3image = new Texture(Gdx.files.internal("gamepics/life.png"));
+        this.life3 = new Rectangle();
 
-		this.enemyLifesImages = new Texture[sensualWoman.getLife()];
-		this.enemyLifes = new Rectangle[sensualWoman.getLife()];
+        this.enemyLifesImages = new Texture[sensualWoman.getLife()];
+        this.enemyLifes = new Rectangle[sensualWoman.getLife()];
 
-		for(int i = 0; i < sensualWoman.getLife(); i++){
-			enemyLifesImages[i] = new Texture(Gdx.files.internal("gamepics/kiss.png"));
-			enemyLifes[i] = new Rectangle();
-			enemyLifes[i].x = initialPosition;
-			enemyLifes[i].y = 720;
-			initialPosition -= 22;
-		}
+        for (int i = 0; i < sensualWoman.getLife(); i++) {
+            enemyLifesImages[i] = new Texture(Gdx.files.internal("gamepics/kiss.png"));
+            enemyLifes[i] = new Rectangle();
+            enemyLifes[i].x = initialPosition;
+            enemyLifes[i].y = 720;
+            initialPosition -= 22;
+        }
 
-		life1.x = 20;
-		life1.y = 710;
-		life2.x = 50;
-		life2.y = 710;
-		life3.x = 80;
-		life3.y = 710;
+        life1.x = 20;
+        life1.y = 710;
+        life2.x = 50;
+        life2.y = 710;
+        life3.x = 80;
+        life3.y = 710;
 
 
+        //img = new Texture(name of grid); --> put image of background
 
-		//img = new Texture(name of grid); --> put image of background
-
-	}
+    }
 
     @Override
     public void show() {
@@ -133,40 +132,34 @@ public class ToyGame implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-
         game.batch.begin();
-        game.batch.draw(background,0,0);
+        game.batch.draw(background, 0, 0);
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
         game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
 
 
-
-        if(toy.getLifes() >= 1) {
+        if (toy.getLifes() >= 1) {
             game.batch.draw(life1image, life1.x, life1.y);
         }
-        if(toy.getLifes()>= 2) {
+        if (toy.getLifes() >= 2) {
             game.batch.draw(life2image, life2.x, life2.y);
         }
-        if(toy.getLifes() >= 3) {
+        if (toy.getLifes() >= 3) {
             game.batch.draw(life3image, life3.x, life3.y);
         }
 
 
-
-
-
-        for (int i = 0; i < sensualWoman.getLife(); i++){
+        for (int i = 0; i < sensualWoman.getLife(); i++) {
             game.batch.draw(enemyLifesImages[i], enemyLifes[i].x, enemyLifes[i].y);
         }
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
-        game.batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
-
+        game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (!createWeapon)weapons.add(new Weapon(toy));
+            if (!createWeapon) weapons.add(new Weapon(toy));
             toySpeech.play();
             createWeapon = true;
         }
@@ -176,7 +169,7 @@ public class ToyGame implements Screen {
 
         }
 
-        if(countWeapon >= 60){
+        if (countWeapon >= 60) {
 
             countWeapon = 0;
             createWeapon = false;
@@ -214,10 +207,12 @@ public class ToyGame implements Screen {
         sensualWoman.move();
         bottles.move();
 
-        for (Weapon weapon : weapons) {
-
-            bottles.collisionDetection(toy, weapon);
+        for(Weapon weapon : weapons){
+            bottles.collisionWithWeapons(weapon,toy);
         }
+
+        bottles.collisionWithToy(toy);
+
         laser.collisionDetection(toy);
 
         for (Weapon weapon : weapons) {
@@ -230,17 +225,29 @@ public class ToyGame implements Screen {
         }
         if (sensualWoman.getLife() <= 0) {
             sensualWoman.dispose();
-            game.setScreen(new GameOverScreen(game));
+
+            try {
+                game.setScreen(new GameOverScreen(game));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
 
-		if(toy.getLifes() <= 0) {
-			game.setScreen(new GameOverScreen(game));
-		}
+        if (toy.getLifes() <= 0) {
 
-	}
 
-	@Override
-	public void dispose () {
+            try {
+                themeGame.stop();
+                game.setScreen(new GameOverScreen(game));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @Override
+    public void dispose() {
         bottles.dispose();
     }
 }
