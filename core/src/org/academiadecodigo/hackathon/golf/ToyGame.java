@@ -19,13 +19,13 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Array;
 
 public class ToyGame implements Screen {
+
     SpriteBatch batch;
     Texture img;
     private Toy toy;
     private SensualWoman sensualWoman;
     private OrthographicCamera camera;
     private com.badlogic.gdx.utils.Array<Weapon> weapons;
-    private int hitWoman = 0;
     private Laser laser;
     private boolean createWeapon;
     private int countWeapon = 0;
@@ -41,13 +41,13 @@ public class ToyGame implements Screen {
 	private Texture life3image;
 	private Rectangle life3;
 
-	private Texture topBarImage;
-	private Rectangle topbar;
+
 
 	private Texture[] enemyLifesImages;
 	private Rectangle[] enemyLifes;
+	private  Texture background;
 
-	private int totalEnemyLifes = 10;
+
 
 	int initialPosition = 990;
 
@@ -55,6 +55,9 @@ public class ToyGame implements Screen {
 
     public ToyGame(TheGame game) {
         this.game = game;
+
+        background = new Texture(Gdx.files.internal("background.jpg"));
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
@@ -75,22 +78,16 @@ public class ToyGame implements Screen {
 		this.life3image = new Texture(Gdx.files.internal("gamepics/life.png"));
 		this.life3 = new Rectangle();
 
-		this.enemyLifesImages = new Texture[totalEnemyLifes];
-		this.enemyLifes = new Rectangle[totalEnemyLifes];
+		this.enemyLifesImages = new Texture[sensualWoman.getLife()];
+		this.enemyLifes = new Rectangle[sensualWoman.getLife()];
 
-		for(int i = 0; i < totalEnemyLifes; i++){
-			enemyLifesImages[i] = new Texture(Gdx.files.internal("gamepics/lifeEnemy.png"));
+		for(int i = 0; i < sensualWoman.getLife(); i++){
+			enemyLifesImages[i] = new Texture(Gdx.files.internal("gamepics/kiss.png"));
 			enemyLifes[i] = new Rectangle();
 			enemyLifes[i].x = initialPosition;
 			enemyLifes[i].y = 720;
 			initialPosition -= 22;
 		}
-
-
-
-
-		this.topBarImage = new Texture(Gdx.files.internal("gamepics/topbar.png"));
-		this.topbar= new Rectangle();
 
 		life1.x = 20;
 		life1.y = 710;
@@ -99,8 +96,7 @@ public class ToyGame implements Screen {
 		life3.x = 80;
 		life3.y = 710;
 
-		topbar.x = 0;
-		topbar.y = 688;
+
 
 		//img = new Texture(name of grid); --> put image of background
 
@@ -136,12 +132,15 @@ public class ToyGame implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+
         game.batch.begin();
+        game.batch.draw(background,0,0);
 
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
         game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
 
-        game.batch.draw(topBarImage, topbar.x, topbar.y);
+
 
         if(toy.getLifes() >= 1) {
             game.batch.draw(life1image, life1.x, life1.y);
@@ -153,7 +152,11 @@ public class ToyGame implements Screen {
             game.batch.draw(life3image, life3.x, life3.y);
         }
 
-        for (int i = 0; i < totalEnemyLifes; i ++){
+
+
+
+
+        for (int i = 0; i < sensualWoman.getLife(); i++){
             game.batch.draw(enemyLifesImages[i], enemyLifes[i].x, enemyLifes[i].y);
         }
 
@@ -218,12 +221,14 @@ public class ToyGame implements Screen {
 
         for (Weapon weapon : weapons) {
             if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
-                hitWoman++;
+
+                sensualWoman.hitWoman();
+
                 weapon.getWeapon().set(1025, toy.getToy().getY(), 30, 30);
                 weapon.getWeaponTexture().dispose();
             }
         }
-        if (hitWoman >= 3) {
+        if (sensualWoman.getLife() <= 0) {
             sensualWoman.dispose();
             game.setScreen(new GameOverScreen(game));
         }

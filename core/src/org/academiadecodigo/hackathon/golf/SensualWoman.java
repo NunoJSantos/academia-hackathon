@@ -14,6 +14,7 @@ public class SensualWoman {
     private Rectangle sensualWoman;
     private Texture womenImage;
     int i = 80;
+    int life = 10;
 
     public SensualWoman() {
         this.sensualWoman = new Rectangle();
@@ -44,6 +45,14 @@ public class SensualWoman {
     public void dispose(){
         womenImage.dispose();
         sensualWoman.set(-130,0,0,0);
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void hitWoman(){
+        life--;
     }
 }
 
