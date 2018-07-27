@@ -39,13 +39,13 @@ public class Projectile {
             }
 
             if (bottle.overlaps(toy.getToy())) {
-                bottle.set(1024, MathUtils.random(0, 768 - 39), 30, 39);
+                bottle.set(1024, MathUtils.random(0, 768 - 39 - 80), 30, 39);
                 toy.setLifes(toy.getLifes() - 1);
             }
 
             if (weapon.getWeapon().overlaps(bottle)) {
 
-                bottle.set(1024, MathUtils.random(0, 768 - 39), 30, 39);
+                bottle.set(1024, MathUtils.random(0, 768 - 39 - 80), 30, 39);
                 weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
                 weapon.changeWeapon();
                 weapon.setMoving(false);
@@ -85,7 +85,7 @@ public class Projectile {
     public void spawnBottles() {
         Rectangle bottle = new Rectangle();
         bottle.x = 1024;
-        bottle.y = MathUtils.random(0, 768 - 39);
+        bottle.y = MathUtils.random(0, 768 - 39 - 80);
         bottle.width = 30;
         bottle.height = 39;
         bottles.add(bottle);

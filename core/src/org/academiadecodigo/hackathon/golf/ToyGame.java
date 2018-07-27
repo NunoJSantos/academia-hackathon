@@ -3,10 +3,12 @@ package org.academiadecodigo.hackathon.golf;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.*;
 import com.sun.java_cup.internal.runtime.Scanner;
@@ -24,7 +26,28 @@ public class ToyGame implements Screen {
 
 	private TheGame game;
 
+	private Texture life1image;
+	private Rectangle life1;
+
+	private Texture life2image;
+	private Rectangle life2;
+
+	private Texture life3image;
+	private Rectangle life3;
+
+	private Texture topBarImage;
+	private Rectangle topbar;
+
+	private Texture[] enemyLifesImages;
+	private Rectangle[] enemyLifes;
+
+	private int totalEnemyLifes = 10;
+
+	int initialPosition = 800;
+
     private Projectile bottles;
+
+
 
 	public ToyGame(TheGame game) {
 		this.game = game;
@@ -38,6 +61,40 @@ public class ToyGame implements Screen {
 
 		bottles = new Projectile();
 		bottles.spawnBottles();
+
+		this.life1image = new Texture(Gdx.files.internal("gamepics/life.png"));
+		this.life1 = new Rectangle();
+		this.life2image = new Texture(Gdx.files.internal("gamepics/life.png"));
+		this.life2 = new Rectangle();
+		this.life3image = new Texture(Gdx.files.internal("gamepics/life.png"));
+		this.life3 = new Rectangle();
+
+		this.enemyLifesImages = new Texture[totalEnemyLifes];
+		this.enemyLifes = new Rectangle[totalEnemyLifes];
+
+		for(int i = 0; i < totalEnemyLifes; i++){
+			enemyLifesImages[i] = new Texture(Gdx.files.internal("gamepics/lifeEnemy.png"));
+			enemyLifes[i] = new Rectangle();
+			enemyLifes[i].x = initialPosition;
+			enemyLifes[i].y = 720;
+			initialPosition += 22;
+		}
+
+
+
+
+		this.topBarImage = new Texture(Gdx.files.internal("gamepics/topbar.png"));
+		this.topbar= new Rectangle();
+
+		life1.x = 20;
+		life1.y = 710;
+		life2.x = 50;
+		life2.y = 710;
+		life3.x = 80;
+		life3.y = 710;
+
+		topbar.x = 0;
+		topbar.y = 688;
 
 		//img = new Texture(name of grid); --> put image of background
 	}
@@ -72,6 +129,24 @@ public class ToyGame implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
+
+
+		game.batch.draw(topBarImage, topbar.x, topbar.y);
+
+		if(toy.getLifes() >= 1) {
+			game.batch.draw(life1image, life1.x, life1.y);
+		}
+		if(toy.getLifes()>= 2) {
+			game.batch.draw(life2image, life2.x, life2.y);
+		}
+		if(toy.getLifes() >= 3) {
+			game.batch.draw(life3image, life3.x, life3.y);
+		}
+
+		for (int i = 0; i < totalEnemyLifes; i ++){
+			game.batch.draw(enemyLifesImages[i], enemyLifes[i].x, enemyLifes[i].y);
+		}
+
 		game.batch.draw(weapon.getWeaponTexture(),weapon.getWeapon().getX(),weapon.getWeapon().getY());
 		game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
 		game.batch.draw(sensualWoman.getWomanImage(), ((float)(sensualWoman.getSensualWoman().getX())) ,((float)sensualWoman.getSensualWoman().getY()) );
