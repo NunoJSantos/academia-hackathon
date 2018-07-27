@@ -1,27 +1,19 @@
 package org.academiadecodigo.hackathon.golf;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.*;
-import com.sun.java_cup.internal.runtime.Scanner;
-
-import java.lang.reflect.Array;
-
-import java.lang.reflect.Array;
 
 public class ToyGame implements Screen {
 
     SpriteBatch batch;
-    Texture img;
     private Toy toy;
     private SensualWoman sensualWoman;
     private OrthographicCamera camera;
@@ -29,6 +21,9 @@ public class ToyGame implements Screen {
     private Laser laser;
     private boolean createWeapon;
     private int countWeapon = 0;
+    private Music themeGame;
+    private Sound womanScream;
+    private Sound toySpeech;
 
     private TheGame game;
 
@@ -59,6 +54,9 @@ public class ToyGame implements Screen {
         background = new Texture(Gdx.files.internal("background.jpg"));
 
 
+        themeGame = Gdx.audio.newMusic(Gdx.files.internal("themeGame.wav"));
+        womanScream = Gdx.audio.newSound(Gdx.files.internal("womanScream.wav"));
+        toySpeech = Gdx.audio.newSound(Gdx.files.internal("toySpeech.wav"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         batch = new SpriteBatch();
@@ -67,7 +65,9 @@ public class ToyGame implements Screen {
         laser = new Laser(sensualWoman);
         laser.spawnLasers();
 
-        weapons = new com.badlogic.gdx.utils.Array<>();
+        weapons = new com.badlogic.gdx.utils.Array<Weapon>();
+        themeGame.setLooping(true);
+        themeGame.play();
         bottles = new Projectile();
         bottles.spawnBottles();
 
@@ -167,6 +167,7 @@ public class ToyGame implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if (!createWeapon)weapons.add(new Weapon(toy));
+            toySpeech.play();
             createWeapon = true;
         }
 
@@ -191,15 +192,15 @@ public class ToyGame implements Screen {
             game.batch.draw(bottles.getBottleImage(), bottle.x, bottle.y);
         }
         for (Rectangle lasers : laser.getLasers()) {
-            game.batch.draw(laser.getLaserImage(), lasers.x,lasers.y);
+            game.batch.draw(laser.getLaserImage(), lasers.x, lasers.y);
         }
         game.batch.draw(sensualWoman.getWomanImage(), ((sensualWoman.getSensualWoman().getX())), (sensualWoman.getSensualWoman().getY()));
         game.batch.end();
         camera.update();
 
         game.batch.setProjectionMatrix(camera.combined);
-
         bottles.checkTime();
+
         laser.checkTime();
 
         if (weapons.size != 0) {
@@ -221,9 +222,8 @@ public class ToyGame implements Screen {
 
         for (Weapon weapon : weapons) {
             if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
-
+                womanScream.play();
                 sensualWoman.hitWoman();
-
                 weapon.getWeapon().set(1025, toy.getToy().getY(), 30, 30);
                 weapon.getWeaponTexture().dispose();
             }

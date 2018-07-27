@@ -30,7 +30,7 @@ public class SensualWoman {
         i++;
 
         if (i % 80 == 0) {
-            sensualWoman.y = MathUtils.random(0, 768 - 208);
+            sensualWoman.y = MathUtils.random(0, 768 - 248);
         }
     }
 
