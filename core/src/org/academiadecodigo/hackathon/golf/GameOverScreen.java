@@ -2,10 +2,13 @@ package org.academiadecodigo.hackathon.golf;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class GameOverScreen implements Screen {
 
@@ -16,6 +19,7 @@ public class GameOverScreen implements Screen {
     //TODO resize or change image file
     private Texture backgroundImage;
     private Rectangle background;
+    TextField nameField;
 
     public GameOverScreen(TheGame game) {
         this.game = game;
@@ -26,6 +30,22 @@ public class GameOverScreen implements Screen {
         background = new Rectangle();
         background.x = 0;
         background.y = 0;
+
+        //UserTextInputListener listener = new UserTextInputListener();
+        //Gdx.input.getTextInput(listener, "Enter your name!", "Initial", "AAA");
+
+        //TODO maybe use this to log the scores
+        /*
+        TextField.TextFieldStyle style = new TextField.TextFieldStyle();
+        style.font = new BitmapFont();
+        style.fontColor = Color.CHARTREUSE;
+        nameField = new TextField("asdf", style);
+        nameField.setText("Test");
+        nameField.setWidth(150);
+        nameField.setX(20);
+        nameField.setY(400);
+        */
+
 
     }
 
@@ -47,6 +67,7 @@ public class GameOverScreen implements Screen {
 
         game.batch.draw(backgroundImage, background.x, background.y);
         game.font.draw(game.batch, "GAME OVER", 100, 150);
+        //nameField.draw(game.batch, 10f);
 
         game.batch.end();
 

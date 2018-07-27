@@ -45,6 +45,7 @@ public class MainMenuScreen implements Screen {
 
 
 
+
     }
 
 
@@ -67,6 +68,7 @@ public class MainMenuScreen implements Screen {
 
         game.batch.draw(backgroundImage,background.x,background.y);
         game.batch.draw(startImage,start.x,start.y);
+
 
         //game.font.draw(game.batch, "O Jogo do TOY!!!!", 100, 150);
         //game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
