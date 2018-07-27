@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackathon.golf;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,11 +21,13 @@ public class Laser {
     private long lastThrowTime;
     private SensualWoman woman;
     private Rectangle laserRec;
+    private Sound laserEffect;
 
     public Laser(SensualWoman woman) {
         this.lasers = new Array<Rectangle>();
         this.laserImage = new Texture(Gdx.files.internal("laser.png"));
         this.woman = woman;
+        this.laserEffect = Gdx.audio.newSound(Gdx.files.internal("laserEffect.wav"));
 
     }
 
@@ -88,6 +91,7 @@ public class Laser {
         laserRec.width = 80;
         laserRec.height = 20;
         lasers.add(laserRec);
+        laserEffect.play();
         lastThrowTime = TimeUtils.nanoTime();
 
     }
