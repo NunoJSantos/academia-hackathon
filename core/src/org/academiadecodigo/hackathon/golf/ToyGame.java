@@ -1,28 +1,20 @@
 package org.academiadecodigo.hackathon.golf;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.*;
-import com.sun.java_cup.internal.runtime.Scanner;
 
-import java.lang.reflect.Array;
 
 public class ToyGame implements Screen {
     SpriteBatch batch;
-    Texture img;
     private Toy toy;
     private SensualWoman sensualWoman;
     private OrthographicCamera camera;
     private Weapon weapon;
-    private int hitWoman = 0;
     private Laser laser;
 
     private TheGame game;
@@ -42,7 +34,6 @@ public class ToyGame implements Screen {
 	private Texture[] enemyLifesImages;
 	private Rectangle[] enemyLifes;
 
-	private int totalEnemyLifes = 10;
 
 	int initialPosition = 990;
 
@@ -70,10 +61,10 @@ public class ToyGame implements Screen {
 		this.life3image = new Texture(Gdx.files.internal("gamepics/life.png"));
 		this.life3 = new Rectangle();
 
-		this.enemyLifesImages = new Texture[totalEnemyLifes];
-		this.enemyLifes = new Rectangle[totalEnemyLifes];
+		this.enemyLifesImages = new Texture[sensualWoman.getLife()];
+		this.enemyLifes = new Rectangle[sensualWoman.getLife()];
 
-		for(int i = 0; i < totalEnemyLifes; i++){
+		for(int i = 0; i < sensualWoman.getLife(); i++){
 			enemyLifesImages[i] = new Texture(Gdx.files.internal("gamepics/lifeEnemy.png"));
 			enemyLifes[i] = new Rectangle();
 			enemyLifes[i].x = initialPosition;
@@ -97,7 +88,6 @@ public class ToyGame implements Screen {
 		topbar.x = 0;
 		topbar.y = 688;
 
-		//img = new Texture(name of grid); --> put image of background
 
 	}
 
@@ -147,7 +137,7 @@ public class ToyGame implements Screen {
             game.batch.draw(life3image, life3.x, life3.y);
         }
 
-        for (int i = 0; i < totalEnemyLifes; i ++){
+        for (int i = 0; i < sensualWoman.getLife(); i ++){
             game.batch.draw(enemyLifesImages[i], enemyLifes[i].x, enemyLifes[i].y);
         }
 
@@ -182,11 +172,11 @@ public class ToyGame implements Screen {
         laser.collisionDetection(toy);
 
         if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
-            hitWoman++;
+            sensualWoman.hitWomen();
             weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
             weapon.setMoving(false);
         }
-        if (hitWoman >= 3) {
+        if (sensualWoman.getLife() <= 0) {
             sensualWoman.dispose();
             game.setScreen(new GameOverScreen(game));
         }
