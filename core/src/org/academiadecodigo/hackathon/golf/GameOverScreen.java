@@ -69,9 +69,9 @@ public class GameOverScreen implements Screen {
 
     private synchronized void persistHighScore() {
 
-        Persistence persistence = game.getPersistence();
+        Persistence persistence = new Persistence();
         persistence.createConnection();
-        //persistence.insertScore(game.getUserName(), score);
+        persistence.insertScore(game.getUserName(), score);
         persistence.close();
 
     }
