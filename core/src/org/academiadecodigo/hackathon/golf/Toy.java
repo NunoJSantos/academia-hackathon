@@ -12,6 +12,15 @@ public class Toy {
     private Rectangle toy;
     private Texture toyImage;
     private int lifes;
+    private int score;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public Toy(){
         this.toy = new Rectangle();
@@ -46,5 +55,4 @@ public class Toy {
     public void setLifes(int lifes) {
         this.lifes = lifes;
     }
-
 }

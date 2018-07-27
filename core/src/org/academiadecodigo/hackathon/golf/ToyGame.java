@@ -138,6 +138,7 @@ public class ToyGame implements Screen {
         game.batch.draw(toy.getToyImage(), toy.getToy().getX(), toy.getToy().getY());
         game.batch.draw(sensualWoman.getWomanImage(), ((float) (sensualWoman.getSensualWoman().getX())), ((float) sensualWoman.getSensualWoman().getY()));
 
+        game.font.draw(game.batch, "Score: " + toy.getScore(), 485, 740);
 
         if (toy.getLifes() >= 1) {
             game.batch.draw(life1image, life1.x, life1.y);
@@ -207,8 +208,8 @@ public class ToyGame implements Screen {
         sensualWoman.move();
         bottles.move();
 
-        for(Weapon weapon : weapons){
-            bottles.collisionWithWeapons(weapon,toy);
+        for (Weapon weapon : weapons) {
+            bottles.collisionWithWeapons(weapon, toy);
         }
 
         bottles.collisionWithToy(toy);
@@ -219,6 +220,7 @@ public class ToyGame implements Screen {
             if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
                 womanScream.play();
                 sensualWoman.hitWoman();
+                toy.setScore(toy.getScore() + 100);
                 weapon.getWeapon().set(1025, toy.getToy().getY(), 30, 30);
                 weapon.getWeaponTexture().dispose();
             }
