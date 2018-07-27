@@ -32,7 +32,7 @@ public class Persistence {
 
     public List<User> getHighScores() {
 
-        List<User> highScores = new LinkedList<>();
+        List<User> highScores = new LinkedList<User>();
 
         try {
             Statement statement = dbConnection.createStatement();

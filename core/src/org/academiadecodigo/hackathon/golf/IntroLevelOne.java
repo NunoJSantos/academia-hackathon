@@ -49,9 +49,10 @@ public class IntroLevelOne implements Screen {
         game.batch.draw(backGroundImage, background.x, background.y);
         game.batch.end();
 
+
         if (input.isKeyPressed(Input.Keys.SPACE)) {
 
-            game.setScreen((new ToyGame(game)));
+            game.setScreen((new InstructionsScreen(game)));
         }
     }
 
