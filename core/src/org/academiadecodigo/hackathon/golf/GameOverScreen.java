@@ -24,16 +24,18 @@ public class GameOverScreen implements Screen {
     private Texture backgroundImage;
     private Rectangle background;
     TextField nameField;
+    int score;
 
-    public GameOverScreen(TheGame game) throws MalformedURLException {
+    public GameOverScreen(TheGame game, int score) throws MalformedURLException {
         this.game = game;
+        this.score = score;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         backgroundImage = new Texture(Gdx.files.internal("gameover.png"));
         URL url = new URL("file://localhost/Users/codecadet/bootcamp/academia-hackathon/core/assets/toyvomit.gif");
         Icon icon = new ImageIcon(url);
         JLabel label = new JLabel(icon);
-        JFrame f = new JFrame("Animation");
+        JFrame f = new JFrame("Ó TOY!!! NÃO CAIAS!!!");
         f.getContentPane().add(label);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
@@ -43,6 +45,8 @@ public class GameOverScreen implements Screen {
         background = new Rectangle();
         background.x = 0;
         background.y = 0;
+
+        persistHighScore();
 
         //UserTextInputListener listener = new UserTextInputListener();
         //Gdx.input.getTextInput(listener, "Enter your name!", "Initial", "AAA");
@@ -59,6 +63,15 @@ public class GameOverScreen implements Screen {
         nameField.setY(400);
         */
 
+
+    }
+
+    private void persistHighScore() {
+
+        Persistence persistence = new Persistence();
+        persistence.createConnection();
+        persistence.insertScore(game.getUserName(), score);
+        persistence.close();
 
     }
 

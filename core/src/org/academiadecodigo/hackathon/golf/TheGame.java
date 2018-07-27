@@ -12,6 +12,7 @@ public class TheGame extends Game{
 
     public SpriteBatch batch;
     public BitmapFont font;
+    private String userName;
 
 
     public void create() {
@@ -27,6 +28,14 @@ public class TheGame extends Game{
     public void dispose(){
         batch.dispose();
         font.dispose();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 }

@@ -220,7 +220,7 @@ public class ToyGame implements Screen {
             if (weapon.getWeapon().overlaps(sensualWoman.getSensualWoman())) {
                 womanScream.play();
                 sensualWoman.hitWoman();
-                toy.setScore(toy.getScore() + 100);
+                toy.incrementScore(100);
                 weapon.getWeapon().set(1025, toy.getToy().getY(), 30, 30);
                 weapon.getWeaponTexture().dispose();
             }
@@ -229,7 +229,7 @@ public class ToyGame implements Screen {
             sensualWoman.dispose();
 
             try {
-                game.setScreen(new GameOverScreen(game));
+                game.setScreen(new GameOverScreen(game, toy.getScore()));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -240,7 +240,7 @@ public class ToyGame implements Screen {
 
             try {
                 themeGame.stop();
-                game.setScreen(new GameOverScreen(game));
+                game.setScreen(new GameOverScreen(game, toy.getScore()));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

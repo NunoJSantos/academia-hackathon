@@ -39,6 +39,10 @@ public class Toy {
         if(toy.y > 768 - 120 - 80) toy.y = 768 - 120 - 80;
     }
 
+    public void incrementScore(int increment){
+        score += increment;
+    }
+
 
     public Texture getToyImage() {
         return toyImage;

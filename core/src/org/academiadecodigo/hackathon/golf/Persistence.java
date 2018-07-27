@@ -63,4 +63,19 @@ public class Persistence {
         }
     }
 
+    public void insertScore(String userName, int score) {
+
+        try {
+
+            Statement statement = dbConnection.createStatement();
+
+            String query = "INSERT INTO scores VALUES ('" + userName + "', " + score + ")";
+
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
