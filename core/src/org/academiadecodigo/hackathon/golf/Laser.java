@@ -13,7 +13,6 @@ import java.util.Iterator;
  * Created by codecadet on 26/07/2018.
  */
 public class Laser {
-
     private Array<Rectangle> lasers;
 
     private Texture laserImage;
@@ -23,8 +22,10 @@ public class Laser {
     private Sound laserEffect;
 
     public Laser(SensualWoman woman) {
+
+
         this.lasers = new Array<Rectangle>();
-        this.laserImage = new Texture(Gdx.files.internal("laser.png"));
+        this.laserImage = new Texture(Gdx.files.internal("laser1.png"));
         this.woman = woman;
         this.laserEffect = Gdx.audio.newSound(Gdx.files.internal("laserEffect.wav"));
 
@@ -32,9 +33,12 @@ public class Laser {
 
     public void move() {
         for (Iterator<Rectangle> iter = lasers.iterator(); iter.hasNext(); ) {
+
+            /*if (!woman.isShooting()) {
+                continue;
+            }*/
             Rectangle laser = iter.next();
             laser.x -= 400 * Gdx.graphics.getDeltaTime();
-
         }
     }
 
@@ -63,6 +67,8 @@ public class Laser {
 
     }
 
+
+
     public Texture getLaserImage() {
         return laserImage;
     }
@@ -84,6 +90,7 @@ public class Laser {
     }
 
     public void spawnLasers() {
+        changeLaser();
         laserRec = new Rectangle();
         laserRec.x = woman.getSensualWoman().getX() - 30;
         laserRec.y = woman.getSensualWoman().getY() + 120;
@@ -96,5 +103,14 @@ public class Laser {
         lastThrowTime = TimeUtils.nanoTime();
 
     }
+
+    public void changeLaser() {
+        int i = (int) Math.floor(Math.random() * 2) + 1;
+        laserImage = new Texture(Gdx.files.internal("laser" + i + ".png"));
+
+    }
 }
+
+
+
 
