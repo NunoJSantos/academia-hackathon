@@ -42,7 +42,7 @@ public class Laser {
         for (Iterator<Rectangle> iter = lasers.iterator(); iter.hasNext(); ) {
             Rectangle laser = iter.next();
 
-            if (laser.x < 0) {
+            if (laser.x < 16) {
                 iter.remove();
             }
 
@@ -90,7 +90,9 @@ public class Laser {
         laserRec.width = 80;
         laserRec.height = 20;
         lasers.add(laserRec);
-        laserEffect.play();
+
+        laserEffect.play(1);
+        //laserEffect.setVolume(1, );
         lastThrowTime = TimeUtils.nanoTime();
 
     }

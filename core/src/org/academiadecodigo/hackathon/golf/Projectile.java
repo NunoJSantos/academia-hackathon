@@ -26,23 +26,43 @@ public class Projectile {
 
     public void move() {
         for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
+
             Rectangle bottle = iter.next();
             bottle.x -= 200 * Gdx.graphics.getDeltaTime();
+
+            if(bottle.y > 768 - 38 - 80){
+                bottle.set(768-38-80,bottle.x,bottle.getWidth(),bottle.getHeight());
+            }
 
         }
     }
 
-    public void collisionDetection(Toy toy, Weapon weapon){
+    public void collisionWithToy(Toy toy){
         for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
             Rectangle bottle = iter.next();
 
-            if (bottle.x < 0) {
+
+            if (bottle.x <= 16) {
                 iter.remove();
             }
 
             if (bottle.overlaps(toy.getToy())) {
-                bottle.set(1024, MathUtils.random(0, 768 - 38-80), 25, 39);
+                bottle.set(1024, MathUtils.random(0, 768 - 38 - 80), 25, 39);
                 toy.setLifes(toy.getLifes() - 1);
+
+            }
+            if (toy.getLifes() == 0) {
+                toy.getToyImage().dispose();
+            }
+        }
+    }
+
+    public void collisionWithWeapons(Weapon weapon, Toy toy){
+        for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
+            Rectangle bottle = iter.next();
+
+            if (bottle.x <= 16) {
+                iter.remove();
             }
 
             if (weapon.getWeapon().overlaps(bottle)) {
@@ -53,24 +73,19 @@ public class Projectile {
                 weapon.setMoving(false);
 
                 bottle.set(1024, MathUtils.random(0, 768 - 38-80), 25, 39);
-                weapon.getWeapon().set(1025, 400, 25,
-                        30);
+                weapon.getWeapon().set(1025, 400, 25, 30);
 
                 weapon.getWeaponTexture().dispose();
 
             }
-            if (toy.getLifes() == 0) {
-                toy.getToyImage().dispose();
-            }
+
         }
     }
 
 
 
-    public void render(Weapon weapon) {
 
 
-    }
 
     public Texture getBottleImage() {
         return bottleImage;
@@ -93,7 +108,7 @@ public class Projectile {
     public void spawnBottles() {
         Rectangle bottle = new Rectangle();
         bottle.x = 1024;
-        bottle.y = MathUtils.random(0, 768 - 38);
+        bottle.y = MathUtils.random(15, 768 - 38);
         bottle.width = 25;
         bottle.height = 38;
         bottles.add(bottle);

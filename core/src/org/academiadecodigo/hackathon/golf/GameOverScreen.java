@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
+import javax.swing.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class GameOverScreen implements Screen {
 
     final TheGame game;
@@ -21,11 +25,20 @@ public class GameOverScreen implements Screen {
     private Rectangle background;
     TextField nameField;
 
-    public GameOverScreen(TheGame game) {
+    public GameOverScreen(TheGame game) throws MalformedURLException {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         backgroundImage = new Texture(Gdx.files.internal("gameover.png"));
+        URL url = new URL("file://localhost/Users/codecadet/bootcamp/academia-hackathon/core/assets/toyvomit.gif");
+        Icon icon = new ImageIcon(url);
+        JLabel label = new JLabel(icon);
+        JFrame f = new JFrame("Animation");
+        f.getContentPane().add(label);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
 
         background = new Rectangle();
         background.x = 0;
@@ -66,8 +79,8 @@ public class GameOverScreen implements Screen {
         game.batch.begin();
 
         game.batch.draw(backgroundImage, background.x, background.y);
-        game.font.draw(game.batch, "GAME OVER", 100, 150);
-        //nameField.draw(game.batch, 10f);
+        // game.font.draw(game.batch, "GAME OVER", 100, 150);
+        // nameField.draw(game.batch, 10f);
 
         game.batch.end();
 
