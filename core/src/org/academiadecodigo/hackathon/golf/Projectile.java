@@ -25,7 +25,7 @@ public class Projectile {
     public void move() {
         for (Iterator<Rectangle> iter = bottles.iterator(); iter.hasNext(); ) {
             Rectangle bottle = iter.next();
-            bottle.x -= 300 * Gdx.graphics.getDeltaTime();
+            bottle.x -= 200 * Gdx.graphics.getDeltaTime();
 
         }
     }
