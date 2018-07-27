@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import javax.swing.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.badlogic.gdx.Gdx.input;
 
@@ -66,6 +68,10 @@ public class GameOverScreen implements Screen {
         nameField.setX(1024 / 2);
         nameField.setY(700);
 
+
+
+
+
     }
 
     private synchronized void persistHighScore() {
@@ -95,8 +101,6 @@ public class GameOverScreen implements Screen {
 
         game.batch.draw(backgroundImage, background.x, background.y);
         nameField.draw(game.batch, 10f);
-
-
 
         game.batch.end();
 

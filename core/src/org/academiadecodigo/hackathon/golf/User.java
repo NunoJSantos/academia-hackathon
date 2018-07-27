@@ -20,6 +20,14 @@ public class User {
         return score;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", score=" + score +
+                '}';
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
