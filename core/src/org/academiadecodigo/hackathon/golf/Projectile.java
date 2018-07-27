@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackathon.golf;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
@@ -13,13 +14,14 @@ import java.util.Iterator;
  */
 public class Projectile {
     private Array<Rectangle> bottles;
-
     private Texture bottleImage;
     private long lastThrowTime;
+    private Sound bottleCrash;
 
     public Projectile() {
-        this.bottles = new Array<>();
+        this.bottles = new Array<Rectangle>();
         this.bottleImage = new Texture(Gdx.files.internal("moscatel.png"));
+        this.bottleCrash = Gdx.audio.newSound(Gdx.files.internal("bottleCrash.wav"));
     }
 
     public void move() {
@@ -39,15 +41,20 @@ public class Projectile {
             }
 
             if (bottle.overlaps(toy.getToy())) {
-                bottle.set(1024, MathUtils.random(0, 768 - 38), 25, 39);
+                bottle.set(1024, MathUtils.random(0, 768 - 38-80), 25, 39);
                 toy.setLifes(toy.getLifes() - 1);
             }
 
             if (weapon.getWeapon().overlaps(bottle)) {
+                bottleCrash.play();
+                bottle.set(1024, MathUtils.random(0, 768 - 38 - 80), 30, 39);
+                weapon.getWeapon().set(toy.getToy().getX(), toy.getToy().getY(), 30, 30);
+                weapon.changeWeapon();
+                weapon.setMoving(false);
 
-                bottle.set(1024, MathUtils.random(0, 768 - 38), 25, 39);
-                weapon.getWeapon().set(1025, 400, 25, 30);
-                toy.setScore(toy.getScore() + 10);
+                bottle.set(1024, MathUtils.random(0, 768 - 38-80), 25, 39);
+                weapon.getWeapon().set(1025, 400, 25,
+                        30);
 
                 weapon.getWeaponTexture().dispose();
 
