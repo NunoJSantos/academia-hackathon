@@ -13,12 +13,14 @@ public class TheGame extends Game{
     public SpriteBatch batch;
     public BitmapFont font;
     private String userName;
+    private Persistence persistence;
 
 
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.setScreen(new MainMenuScreen(this));
+        this.persistence = new Persistence();
     }
 
     public void render(){
@@ -38,4 +40,7 @@ public class TheGame extends Game{
         this.userName = userName;
     }
 
+    public Persistence getPersistence() {
+        return persistence;
+    }
 }

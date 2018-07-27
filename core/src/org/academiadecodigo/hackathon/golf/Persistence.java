@@ -12,6 +12,10 @@ public class Persistence {
 
     private Connection dbConnection;
 
+    public Persistence() {
+        System.out.println("I was built!");
+    }
+
 
     public void createConnection() {
 
@@ -20,6 +24,7 @@ public class Persistence {
                 dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/toyscores", "root", "");
             }
         } catch (SQLException x) {
+            x.printStackTrace();
             System.out.println("Couldn’t get connection!");
         }
 

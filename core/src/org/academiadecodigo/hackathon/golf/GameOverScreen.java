@@ -26,9 +26,12 @@ public class GameOverScreen implements Screen {
     TextField nameField;
     int score;
 
+
     public GameOverScreen(TheGame game, int score) throws MalformedURLException {
         this.game = game;
         this.score = score;
+
+        persistHighScore();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1024, 768);
         backgroundImage = new Texture(Gdx.files.internal("gameover.png"));
@@ -46,7 +49,6 @@ public class GameOverScreen implements Screen {
         background.x = 0;
         background.y = 0;
 
-        persistHighScore();
 
         //UserTextInputListener listener = new UserTextInputListener();
         //Gdx.input.getTextInput(listener, "Enter your name!", "Initial", "AAA");
@@ -63,14 +65,13 @@ public class GameOverScreen implements Screen {
         nameField.setY(400);
         */
 
-
     }
 
-    private void persistHighScore() {
+    private synchronized void persistHighScore() {
 
-        Persistence persistence = new Persistence();
+        Persistence persistence = game.getPersistence();
         persistence.createConnection();
-        persistence.insertScore(game.getUserName(), score);
+        //persistence.insertScore(game.getUserName(), score);
         persistence.close();
 
     }

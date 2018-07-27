@@ -12,7 +12,7 @@ public class Test {
 
         Persistence persistence = new Persistence();
         persistence.createConnection();
-        persistence.insertScore("sadf", 234);
+        persistence.insertScore("sadf", 234352434);
         persistence.close();
     }
 
